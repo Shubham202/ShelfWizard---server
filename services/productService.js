@@ -18,7 +18,35 @@ const getProductById = async productId => {
 	}
 };
 
+const createProduct = async ({
+	name,
+	sales,
+	reviews,
+	seasonality,
+	profitMargin
+}) => {
+	try {
+		// Create a new product instance
+		const newProduct = new ProductModel({
+			name,
+			sales,
+			reviews,
+			seasonality,
+			profitMargin
+		});
+
+		// Save the new product to the database
+		await newProduct.save();
+
+		// Return the newly created product data
+		return newProduct;
+	} catch (error) {
+		throw new Error(`Product creation failed: ${error.message}`);
+	}
+};
+
 export default {
 	getAllProducts,
-	getProductById
+	getProductById,
+	createProduct
 };
