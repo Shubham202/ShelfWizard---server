@@ -4,7 +4,7 @@ import optimizationController from "../controllers/optimizationController.js";
 
 const router = express.Router();
 
-// Define routes
-router.post("/optimize-shelf-space", optimizationController.optimizeShelfSpace);
+// Route to trigger the optimization process
+router.get("/", optimizationController.optimizeShelfSpace);
 
 export default router;

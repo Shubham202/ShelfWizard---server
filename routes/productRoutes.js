@@ -8,4 +8,6 @@ router.get("/:productId", productController.getProductById);
 
 router.post("/", productController.createProduct);
 
+router.delete("/", productController.deleteProductByName);
+
 export default router;

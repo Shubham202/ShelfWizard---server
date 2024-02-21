@@ -1,3 +1,4 @@
+// productService.js
 import ProductModel from "../models/ProductModel.js";
 
 const getAllProducts = async () => {
@@ -18,21 +19,30 @@ const getProductById = async productId => {
 	}
 };
 
+const getProductByName = async productName => {
+	try {
+		const product = await ProductModel.findOne({ name: productName });
+		return product;
+	} catch (error) {
+		throw new Error(`Error fetching product by name: ${error.message}`);
+	}
+};
+
 const createProduct = async ({
 	name,
-	sales,
-	reviews,
-	seasonality,
-	profitMargin
+	category,
+	rating,
+	costPrice,
+	sellingPrice
 }) => {
 	try {
 		// Create a new product instance
 		const newProduct = new ProductModel({
 			name,
-			sales,
-			reviews,
-			seasonality,
-			profitMargin
+			category,
+			rating,
+			costPrice,
+			sellingPrice
 		});
 
 		// Save the new product to the database
@@ -44,9 +54,23 @@ const createProduct = async ({
 		throw new Error(`Product creation failed: ${error.message}`);
 	}
 };
+const deleteProductByName = async productName => {
+	try {
+		// Find and remove the product with the specified name
+		await ProductModel.findOneAndDelete({ name: productName });
+
+		// You can also use ProductModel.deleteOne({ name: productName }) for a similar effect
+
+		// No need to return anything for deletion
+	} catch (error) {
+		throw new Error(`Product deletion failed: ${error.message}`);
+	}
+};
 
 export default {
 	getAllProducts,
 	getProductById,
-	createProduct
+	getProductByName,
+	createProduct,
+	deleteProductByName // Add the new function to the export
 };
